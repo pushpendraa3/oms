@@ -27,9 +27,11 @@ pruductRouter.get("/:id", async (req, res) => {
 })
 
 pruductRouter.post("/", async (req, res) => {
+  console.log("post req running")
+  console.log(req.body)
   try {
     const { name, price, category } = req.body
-
+console.log({name, price, category})
     await prisma.product.create({
       data: {
         name,
