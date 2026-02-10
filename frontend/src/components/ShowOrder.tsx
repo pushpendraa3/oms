@@ -2,48 +2,43 @@ import React, { useEffect, useState } from 'react'
 import AddOrders from './AddOrders'
 
 const ShowOrder = () => {
-  // fetch orders from backend
-  // show it
-  // also show add order 
-  // should rerender if called from addOrder
   const [orders, setOrders] = useState([])
-  const [product, setProduct] = useState({})
 
   function getOrders() {
     fetch("http://localhost:3000/orders")
       .then(res => res.json())
       .then(data => {
-        console.log("orders:", data.orders)
-        //  console.log("products:", data.orders[0].product)
+        // console.log("orders:", data.orders)
         setOrders(data.orders)
-        setProduct(data.orders[0].product)
       })
       .catch(err => {
         console.error("error:", err)
       })
 
   }
-useEffect(() => {
+  useEffect(() => {
     getOrders()
-}, [])
+  }, [])
 
-if(orders.length === 0) return <h3>Loading data..</h3>
+  if (orders.length === 0) return <h3>Loading data..</h3>
   return (
     <div>
-      <AddOrders onOrderCreated={getOrders}/>
+      <AddOrders onOrderCreated={getOrders} />
 
       <h2>Orders</h2>
-      {orders.map((obj) => {
-        // console.log(obj)
-        return(
-          <div key={obj.id}>
-          <h3>{obj.id}, {obj.quantity}</h3> 
+      {orders.map((order) => {
+        return (
+          <div className='orderCard' key={order.id}>
+            <h3>Order #{order.id}</h3>
+            <p>Quantity: {order.quantity}</p>
+            <p>Product: {order.product.name}</p>
+            <p>Price: {order.product.price}</p>
+            <p>Category: {order.product.category}</p>
           </div>
         )
       })}
-        <span>{product.name}, {product.price}, {product.category}</span>
-          
-     
+
+
     </div>
   )
 }

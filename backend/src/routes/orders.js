@@ -17,8 +17,19 @@ orderRouter.get("/", async (req, res) => {
 
 orderRouter.post("/", async (req, res) => {
     const { productId, quantity } = req.body
-    console.log(productId, quantity)
+
+    if (!productId || !quantity) {
+        return res.status(400).json({ msg: "productId and quantity required" })
+    }
+
     try {
+        const product = await prisma.product.findUnique({
+            where: { id: productId }
+        })
+
+        if (!product) {
+            return res.status(404).json({ msg: "product not found" })
+        }
         await prisma.order.create({
             data: {
                 productId,
