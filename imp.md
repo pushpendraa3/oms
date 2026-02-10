@@ -1,1 +1,3 @@
 db: https://create-db.prisma.io/claim?projectID=proj_cmlc4pp2k0egwyoe82nfhwmk9&utm_source=create-db&utm_medium=cli
+
+local postgress password = 1234

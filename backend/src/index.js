@@ -2,7 +2,8 @@ import express from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
 import { prisma } from './prisma.js';
-import productRoutes from './routes/products.js';
+import productRouter from './routes/products.js';
+import orderRouter from './routes/orders.js';
 
 dotenv.config();
 
@@ -17,7 +18,8 @@ app.use((req, res, next) => {
 
 app.use(express.json());
 
-app.use('/products', productRoutes);
+app.use('/products', productRouter);
+app.use('/orders', orderRouter);
 
 app.get("/health", async (req, res) => {
   try {

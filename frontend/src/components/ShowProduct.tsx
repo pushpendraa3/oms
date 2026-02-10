@@ -12,7 +12,7 @@ const ShowProduct = ({ count }) => {
     .then(data => setProductList(data.products))
     }, [count])
 
-    if(productList.length === 0) return <div>No data</div>
+    if(productList.length === 0) return <div>Loading data</div>
 
   return (
     <div>
