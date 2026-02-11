@@ -9,10 +9,10 @@ const App = () => {
   const [countProductCreated, setCountProductCreated] = useState(0)
   return(
     <>
-      {/* <AddProduct count={countProductCreated} setCount={setCountProductCreated}/> */}
-      {/* <ShowProduct count={countProductCreated}/> */}
-      <ShowOrder />
-      {/* <AddOrders /> */}
+      <AddProduct count={countProductCreated} setCount={setCountProductCreated}/>
+      <ShowProduct count={countProductCreated}/>
+      {/* <ShowOrder /> */}
+      
     </>
   )
 }

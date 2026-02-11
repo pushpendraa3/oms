@@ -1,15 +1,15 @@
 import { useState, useEffect } from 'react'
 import ProductCard from './ProductCard';
 
-// fetch data from api and set it to state variable
-
 const ShowProduct = ({ count }) => {
     const [productList, setProductList] = useState([])
 
     useEffect(() => {
     fetch("http://localhost:3000/products/")
     .then(res => res.json())
-    .then(data => setProductList(data.products))
+    .then(data => {
+      setProductList(data.data)
+    })
     }, [count])
 
     if(productList.length === 0) return <div>Loading data</div>
