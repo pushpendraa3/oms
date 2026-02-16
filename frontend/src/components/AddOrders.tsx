@@ -1,10 +1,12 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
+type AddOrdersProps = {
+  onOrderCreated: () => void
+}
+const AddOrders = ({ onOrderCreated }: AddOrdersProps) => {
+  const [productId, setProductId] = useState<number>(0)
+  const [quantity, setQuantity] = useState<number>(0)
 
-const AddOrders = ({ onOrderCreated }) => {
-  const [productId, setProductId] = useState(0)
-  const [quantity, setQuantity] = useState(0)
-
-  function handleSubmit(e) {
+  function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault()
     fetch("http://localhost:3000/orders", {
       method: "POST",

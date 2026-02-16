@@ -1,11 +1,14 @@
-import React, { useState, useEffect } from 'react'
+import { useState } from 'react'
+type AddProductProps = {
+  setCount: React.Dispatch<React.SetStateAction<number>>
+}
 
-const AddProduct = ({ setCount, count }) => {
-    const [name, setName] = useState("")
-    const [category, setCategory] = useState("")
-    const [price, setPrice] = useState(0)
+const AddProduct = ({ setCount }: AddProductProps) => {
+    const [name, setName] = useState<string>("")
+    const [category, setCategory] = useState<string>("")
+    const [price, setPrice] = useState<number>(0)
 
-    function handleSubmit(e) {
+    function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
         e.preventDefault()
         fetch("http://localhost:3000/products", {
             method: "POST",

@@ -1,9 +1,20 @@
-import express from 'express';
+import express, { type Request, type Response }  from 'express';
 import { prisma } from '../prisma.js';
 
 const productRouter = express.Router()
 
-productRouter.get("/", async (req, res) => {
+type CreateProductBody = {
+  name: string
+  price: number
+  category?: string
+}
+type UpdateProductBody = {
+  name?: string
+  price?: number
+  category?: string
+}
+
+productRouter.get("/", async (req: Request, res: Response) => {
   try {
     const products = await prisma.product.findMany()
     res.status(200).json({ data: products })
@@ -12,7 +23,7 @@ productRouter.get("/", async (req, res) => {
   }
 })
 
-productRouter.get("/:id", async (req, res) => {
+productRouter.get("/:id", async (req: Request, res: Response) => {
   try {
     const id = Number(req.params.id)
     if (isNaN(id)) {
@@ -33,9 +44,9 @@ productRouter.get("/:id", async (req, res) => {
   }
 })
 
-productRouter.post("/", async (req, res) => {
+productRouter.post("/", async (req: Request, res: Response) => {
   try {
-    const { name, price, category } = req.body
+    const { name, price, category } = req.body as CreateProductBody
     if (!name || price === undefined) {
       return res.status(400).json({ msg: "name and price required" })
     }
@@ -54,7 +65,7 @@ productRouter.post("/", async (req, res) => {
   }
 })
 
-productRouter.put("/:id", async (req, res) => {
+productRouter.put("/:id", async (req: Request, res: Response) => {
   try {
     const id = Number(req.params.id)
     if (isNaN(id)) {
@@ -69,9 +80,9 @@ productRouter.put("/:id", async (req, res) => {
       return res.status(404).json({ msg: "product not found" })
     }
 
-    const { name, price, category } = req.body
+    const { name, price, category } = req.body as UpdateProductBody
 
-    const data = {}
+    const data: UpdateProductBody = {}
 
     if (name !== undefined) data.name = name
     if (price !== undefined) data.price = price
@@ -90,7 +101,7 @@ productRouter.put("/:id", async (req, res) => {
   }
 })
 
-productRouter.delete("/:id", async (req, res) => {
+productRouter.delete("/:id", async (req: Request, res: Response) => {
   try {
     const id = Number(req.params.id)
     if (isNaN(id)) {

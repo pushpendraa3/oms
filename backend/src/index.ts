@@ -1,5 +1,5 @@
-import express from 'express';
-import cors from 'cors';
+import express, { type Request, type Response } from 'express';
+// import cors from 'cors';
 import dotenv from 'dotenv';
 import { prisma } from './prisma.js';
 import productRouter from './routes/products.js';
@@ -21,7 +21,7 @@ app.use(express.json());
 app.use('/products', productRouter);
 app.use('/orders', orderRouter);
 
-app.get("/health", async (req, res) => {
+app.get("/health", async (req: Request, res: Response) => {
   try {
     await prisma.$queryRaw`SELECT 1`
     res.status(200).json({ status: "ok" })

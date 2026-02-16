@@ -1,13 +1,21 @@
 import { useState, useEffect } from 'react'
 import ProductCard from './ProductCard';
-
-const ShowProduct = ({ count }) => {
-    const [productList, setProductList] = useState([])
+type ShowProductProps = {
+  count: number
+}
+export type Product = {
+  id: number
+  name: string
+  price: number
+  category?: string
+}
+const ShowProduct = ({ count }: ShowProductProps) => {
+    const [productList, setProductList] = useState<Product[]>([])
 
     useEffect(() => {
     fetch("http://localhost:3000/products/")
     .then(res => res.json())
-    .then(data => {
+    .then((data: { data: Product[] }) => {
       setProductList(data.data)
     })
     }, [count])

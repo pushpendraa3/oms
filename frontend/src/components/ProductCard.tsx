@@ -1,6 +1,9 @@
-import React from 'react'
+import { type Product } from "./ShowProduct"
 
-const ProductCard = ({ data }) => {
+type ProductCardProps = {
+    data: Product
+}
+const ProductCard = ({ data }: ProductCardProps) => {
     const { id, name, price, category } = data
     return (
         <div className='productCard'>

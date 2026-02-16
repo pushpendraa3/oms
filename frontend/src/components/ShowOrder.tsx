@@ -1,18 +1,26 @@
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import AddOrders from './AddOrders'
+import type { Product } from './ShowProduct'
+
+type Order = {
+  id: number
+  product: Product
+  productId: number
+  quantity: number
+}
 
 const ShowOrder = () => {
-  const [orders, setOrders] = useState([])
+  const [orders, setOrders] = useState<Order[]>([])
 
   function getOrders() {
     fetch("http://localhost:3000/orders")
       .then(res => res.json())
-      .then(data => {
-        // console.log("orders:", data.orders)
-        setOrders(data.orders)
+      .then((data: { data: Order[] }) => {
+        // console.log("data.data:", data.data)
+        setOrders(data.data)
       })
       .catch(err => {
-        console.error("error:", err)
+        console.error("error:", err.message)
       })
 
   }
@@ -24,6 +32,7 @@ const ShowOrder = () => {
   return (
     <div>
       <AddOrders onOrderCreated={getOrders} />
+      {/* types needed for onOrderCreated in AddOrders */}
 
       <h2>Orders</h2>
       {orders.map((order) => {
